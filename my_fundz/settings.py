@@ -22,6 +22,8 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -127,3 +129,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTINGS = {
+    "site_title": "MyFundz Admin",
+    "site_header": "MyFundz",
+    "site_brand": "Money Transfer",
+    # "site_logo": "images/nobg.png",
+    # "login_logo": "images/nobg.png",
+    "site_logo_classes": "img-circle",
+    "welcome_sign": "Welcome to My Fundz Dashboard",
+    "copyright": "MyFundz - All Right Reserved © Copyright 2023 - Till Date",
+    # "order_with_respect_to": ["main", "accounts", "transactions", "addon", "blog"]
+}
