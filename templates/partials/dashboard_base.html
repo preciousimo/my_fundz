@@ -1,294 +1,416 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>MyFundz - Money Transfer and Online Payments Dashboard</title>
 
-    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard/css/fontawesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard/css/jquery-ui.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard/css/plugin/apexcharts.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard/css/plugin/nice-select.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard/css/arafat-font.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard/css/plugin/animate.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+    <link
+      rel="stylesheet"
+      href="{% static 'dashboard/css/bootstrap.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'dashboard/css/fontawesome.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'dashboard/css/jquery-ui.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'dashboard/css/plugin/apexcharts.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'dashboard/css/plugin/nice-select.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'dashboard/css/arafat-font.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'dashboard/css/plugin/animate.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}" />
 
     <style>
-        .navbar-brandd {
-            font-size: 25px;
-            font-weight: bold;
-            text-decoration: none;
-            color: #4b23c0;
-            transition: color 0.3s;
-        }
-    
-        .navbar-brandd:hover {
-            color: #76b5ff;
-        }
-    </style>
-</head>
+      .navbar-brandd {
+        font-size: 25px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #4b23c0;
+        transition: color 0.3s;
+      }
 
-<body>
+      .navbar-brandd:hover {
+        color: #76b5ff;
+      }
+    </style>
+  </head>
+
+  <body>
     <!-- start preloader -->
     <div class="preloader" id="preloader"></div>
     <!-- end preloader -->
 
     <!-- Scroll To Top Start-->
-    <a href="javascript:void(0)" class="scrollToTop"><i class="fas fa-angle-double-up"></i></a>
+    <a href="javascript:void(0)" class="scrollToTop"
+      ><i class="fas fa-angle-double-up"></i
+    ></a>
     <!-- Scroll To Top End -->
 
     <!-- header-section start -->
     <header class="header-section body-collapse">
-        <div class="overlay">
-            <div class="container-fruid">
-                <div class="row d-flex header-area">
-                    <div class="navbar-area d-flex align-items-center justify-content-between">
-                        <div class="sidebar-icon">
-                            <img src="{% static 'dashboard/images/icon/menu.png' %}" alt="icon">
-                        </div>
-                        <form action="#" class="flex-fill">
-                            <div class="form-group d-flex align-items-center">
-                                <img src="{% static 'dashboard/images/icon/search.png' %}" alt="icon">
-                                <input type="text" placeholder="Type to search...">
-                            </div>
-                        </form>
-                        <div class="dashboard-nav">
-                            <div class="single-item language-area">
-                                <div class="language-btn">
-                                    <img src="{% static 'dashboard/images/icon/lang.png' %}" alt="icon">
-                                </div>
-                                <ul class="main-area language-content">
-                                    <li>English</li>
-                                    <li>Hindi</li>
-                                    <li class="active">English (US)</li>
-                                    <li>Japanese</li>
-                                    <li>Kannada</li>
-                                    <li>Lithuanian</li>
-                                </ul>
-                            </div>
-                            <div class="single-item notifications-area">
-                                <div class="notifications-btn">
-                                    <img src="{% static 'dashboard/images/icon/bell.png' %}" class="bell-icon" alt="icon">
-                                </div>
-                                <div class="main-area notifications-content">
-                                    <div class="head-area d-flex justify-content-between">
-                                        <h5>Notifications</h5>
-                                        <span class="mdr">4</span>
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <a href="javascript:void(0)" class="d-flex">
-                                                <div class="img-area">
-                                                    <img src="{% static 'dashboard/images/user-1.png' %}" class="max-un" alt="image">
-                                                </div>
-                                                <div class="text-area">
-                                                    <p class="mdr">You received a payment of <b>$134.00</b> from <b>Anna
-                                                            Green</b></p>
-                                                    <p class="mdr time-area">09.39AM</p>
-                                                </div>
-                                            </a>
-                                            <i class="fa-solid fa-caret-right"></i>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)" class="d-flex">
-                                                <div class="img-area">
-                                                    <img src="{% static 'dashboard/images/user-2.png' %}" class="max-un" alt="image">
-                                                </div>
-                                                <div class="text-area">
-                                                    <p class="mdr"><b>James Deed</b> requested a payment of
-                                                        <b>£890.00</b>
-                                                    </p>
-                                                    <p class="mdr time-area">08.09AM</p>
-                                                </div>
-                                            </a>
-                                            <i class="fa-solid fa-caret-right"></i>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)" class="d-flex">
-                                                <div class="img-area">
-                                                    <img src="{% static 'dashboard/images/master-card.png' %}" class="max-un" alt="image">
-                                                </div>
-                                                <div class="text-area">
-                                                    <p class="mdr">Your new payment method has beed added successfully
-                                                    </p>
-                                                    <p class="mdr time-area">09.39AM</p>
-                                                </div>
-                                            </a>
-                                            <i class="fa-solid fa-caret-right"></i>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)" class="d-flex">
-                                                <div class="img-area">
-                                                    <img src="{% static 'dashboard/images/user-3.png' %}" class="max-un" alt="image">
-                                                </div>
-                                                <div class="text-area">
-                                                    <p class="mdr">You received a payment of <b>$250.00</b> from Goerge Michael
-                                                    </p>
-                                                    <p class="mdr time-area">Yesterday</p>
-                                                </div>
-                                            </a>
-                                            <i class="fa-solid fa-caret-right"></i>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="single-item user-area">
-                                <div class="profile-area d-flex align-items-center">
-                                    <span class="user-profile">
-                                        <img src="{% static 'dashboard/images/avatar.png' %}" alt="User">
-                                    </span>
-                                    <i class="fa-solid fa-sort-down"></i>
-                                </div>
-                                <div class="main-area user-content">
-                                    <div class="head-area d-flex align-items-center">
-                                        <div class="profile-img">
-                                            <img src="{% static 'dashboard/images/avatar-2.png' %}" alt="User">
-                                        </div>
-                                        <div class="profile-head">
-                                            <a href="javascript:void(0)">
-                                                <h5>Kevin Martin</h5>
-                                            </a>
-                                            <p class="wallet-id">Wallet ID: 6264849965</p>
-                                        </div>
-                                    </div>
-                                    <ul>
-                                        <li class="border-area">
-                                            <a href="account.html"><i class="fas fa-cog"></i>Settings</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="fas fa-sign-out"></i>Logout</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sidebar-wrapper">
-                        <div class="close-btn">
-                            <i class="fa-solid fa-xmark"></i>
-                        </div>
-                        <div class="sidebar-logo">
-                            <a class="navbar-brandd" href="{% url 'index' %}">
-                                MyFundz
-                            </a>  
-                        </div>
-                        <ul>
-                            <li class="active">
-                                <a href="dashboard.html">
-                                    <img src="{% static 'dashboard/images/icon/dashboard.png' %}" alt="Dashboard"> <span>Dashboard</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="transactions.html">
-                                    <img src="{% static 'dashboard/images/icon/transactions.png' %}" alt="Transactions"> <span>Transactions</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="pay.html">
-                                    <img src="{% static 'dashboard/images/icon/pay.png' %}" alt="Pay"> <span>Pay</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="receive-step-1.html">
-                                    <img src="{% static 'dashboard/images/icon/receive.png' %}" alt="Receive"> <span>Receive</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="money-exchange.html">
-                                    <img src="{% static 'dashboard/images/icon/exchange.png' %}" alt="Exchange"> <span>Exchange</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="recipients.html">
-                                    <img src="{% static 'dashboard/images/icon/recipients.png' %}" alt="Recipients"> <span>Recipients</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="crypto.html">
-                                    <img src="{% static 'dashboard/images/icon/crypto.png' %}" alt="Crypto"> <span>Crypto</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="deposit-money.html">
-                                    <img src="{% static 'dashboard/images/icon/deposit.png' %}" alt="Deposit"> <span>Deposit Money</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="withdraw-money-step-1.html">
-                                    <img src="{% static 'dashboard/images/icon/withdraw.png' %}" alt="Withdraw"> <span>Withdraw Money</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="bottom-item">
-                            <li>
-                                <a href="account.html">
-                                    <img src="{% static 'dashboard/images/icon/account.png' %}" alt="Account"> <span>Account</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <img src="{% static 'dashboard/images/icon/support.png' %}" alt="Support"> <span>Support</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <img src="{% static 'dashboard/images/icon/quit.png' %}" alt="Quit"> <span>Quit</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="pt-120">
-                            <div class="invite-now">
-                                <div class="img-area">
-                                    <img src="{% static 'dashboard/images/invite-now-illus.png' %}" alt="Image">
-                                </div>
-                                <p>Invite your friend and get $25</p>
-                                <a href="javascript:void(0)" class="cmn-btn">Invite Now</a>
-                            </div>
-                        </div>
-                    </div>
+      <div class="overlay">
+        <div class="container-fruid">
+          <div class="row d-flex header-area">
+            <div
+              class="navbar-area d-flex align-items-center justify-content-between"
+            >
+              <div class="sidebar-icon">
+                <img
+                  src="{% static 'dashboard/images/icon/menu.png' %}"
+                  alt="icon"
+                />
+              </div>
+              <form action="#" class="flex-fill">
+                <div class="form-group d-flex align-items-center">
+                  <img
+                    src="{% static 'dashboard/images/icon/search.png' %}"
+                    alt="icon"
+                  />
+                  <input type="text" placeholder="Type to search..." />
                 </div>
+              </form>
+              <div class="dashboard-nav">
+                <div class="single-item language-area">
+                  <div class="language-btn">
+                    <img
+                      src="{% static 'dashboard/images/icon/lang.png' %}"
+                      alt="icon"
+                    />
+                  </div>
+                  <ul class="main-area language-content">
+                    <li>English</li>
+                    <li>Hindi</li>
+                    <li class="active">English (US)</li>
+                    <li>Japanese</li>
+                    <li>Kannada</li>
+                    <li>Lithuanian</li>
+                  </ul>
+                </div>
+                <div class="single-item notifications-area">
+                  <div class="notifications-btn">
+                    <img
+                      src="{% static 'dashboard/images/icon/bell.png' %}"
+                      class="bell-icon"
+                      alt="icon"
+                    />
+                  </div>
+                  <div class="main-area notifications-content">
+                    <div class="head-area d-flex justify-content-between">
+                      <h5>Notifications</h5>
+                      <span class="mdr">4</span>
+                    </div>
+                    <ul>
+                      <li>
+                        <a href="javascript:void(0)" class="d-flex">
+                          <div class="img-area">
+                            <img
+                              src="{% static 'dashboard/images/user-1.png' %}"
+                              class="max-un"
+                              alt="image"
+                            />
+                          </div>
+                          <div class="text-area">
+                            <p class="mdr">
+                              You received a payment of <b>$134.00</b> from
+                              <b>Anna Green</b>
+                            </p>
+                            <p class="mdr time-area">09.39AM</p>
+                          </div>
+                        </a>
+                        <i class="fa-solid fa-caret-right"></i>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)" class="d-flex">
+                          <div class="img-area">
+                            <img
+                              src="{% static 'dashboard/images/user-2.png' %}"
+                              class="max-un"
+                              alt="image"
+                            />
+                          </div>
+                          <div class="text-area">
+                            <p class="mdr">
+                              <b>James Deed</b> requested a payment of
+                              <b>£890.00</b>
+                            </p>
+                            <p class="mdr time-area">08.09AM</p>
+                          </div>
+                        </a>
+                        <i class="fa-solid fa-caret-right"></i>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)" class="d-flex">
+                          <div class="img-area">
+                            <img
+                              src="{% static 'dashboard/images/master-card.png' %}"
+                              class="max-un"
+                              alt="image"
+                            />
+                          </div>
+                          <div class="text-area">
+                            <p class="mdr">
+                              Your new payment method has beed added
+                              successfully
+                            </p>
+                            <p class="mdr time-area">09.39AM</p>
+                          </div>
+                        </a>
+                        <i class="fa-solid fa-caret-right"></i>
+                      </li>
+                      <li>
+                        <a href="javascript:void(0)" class="d-flex">
+                          <div class="img-area">
+                            <img
+                              src="{% static 'dashboard/images/user-3.png' %}"
+                              class="max-un"
+                              alt="image"
+                            />
+                          </div>
+                          <div class="text-area">
+                            <p class="mdr">
+                              You received a payment of <b>$250.00</b> from
+                              Goerge Michael
+                            </p>
+                            <p class="mdr time-area">Yesterday</p>
+                          </div>
+                        </a>
+                        <i class="fa-solid fa-caret-right"></i>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="single-item user-area">
+                  <div class="profile-area d-flex align-items-center">
+                    <span class="user-profile">
+                        <img style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" src="{{ request.user.kyc.image.url }}" alt="image">
+                    </span>
+                    <i class="fa-solid fa-sort-down"></i>
+                  </div>
+                  <div class="main-area user-content">
+                    <div class="head-area d-flex align-items-center">
+                      <div class="profile-img">
+                        <img
+                          style="
+                            width: 60px;
+                            height: 60px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                          "
+                          src="{{ request.user.kyc.image.url }}"
+                          alt="image"
+                        />
+                      </div>
+                      <div class="profile-head">
+                        <a href="{% url 'account:account' %}">
+                          <h5>{{kyc.full_name|title}}</h5>
+                        </a>
+                        <p class="wallet-id">
+                          <small
+                            >Account No. {{ request.user.account.account_number}}</small
+                          >
+                        </p>
+                        <p class="wallet-id">
+                          <small
+                            >Pin No. {{ request.user.account.pin_number}}</small
+                          >
+                        </p>
+                      </div>
+                    </div>
+                    <ul>
+                      <li class="border-area">
+                        <a href="account.html"
+                          ><i class="fas fa-cog"></i>Settings</a
+                        >
+                      </li>
+                      <li>
+                        <a href="{% url 'logout' %}"
+                          ><i class="fas fa-sign-out"></i>Logout</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div class="sidebar-wrapper">
+              <div class="close-btn">
+                <i class="fa-solid fa-xmark"></i>
+              </div>
+              <div class="sidebar-logo">
+                <a class="navbar-brandd" href="{% url 'index' %}"> MyFundz </a>
+              </div>
+              <ul>
+                <li class="active">
+                  <a href="dashboard.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/dashboard.png' %}"
+                      alt="Dashboard"
+                    />
+                    <span>Dashboard</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="transactions.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/transactions.png' %}"
+                      alt="Transactions"
+                    />
+                    <span>Transactions</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="pay.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/pay.png' %}"
+                      alt="Pay"
+                    />
+                    <span>Pay</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="receive-step-1.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/receive.png' %}"
+                      alt="Receive"
+                    />
+                    <span>Receive</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="money-exchange.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/exchange.png' %}"
+                      alt="Exchange"
+                    />
+                    <span>Exchange</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="recipients.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/recipients.png' %}"
+                      alt="Recipients"
+                    />
+                    <span>Recipients</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="crypto.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/crypto.png' %}"
+                      alt="Crypto"
+                    />
+                    <span>Crypto</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="deposit-money.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/deposit.png' %}"
+                      alt="Deposit"
+                    />
+                    <span>Deposit Money</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="withdraw-money-step-1.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/withdraw.png' %}"
+                      alt="Withdraw"
+                    />
+                    <span>Withdraw Money</span>
+                  </a>
+                </li>
+              </ul>
+              <ul class="bottom-item">
+                <li>
+                  <a href="account.html">
+                    <img
+                      src="{% static 'dashboard/images/icon/account.png' %}"
+                      alt="Account"
+                    />
+                    <span>Account</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">
+                    <img
+                      src="{% static 'dashboard/images/icon/support.png' %}"
+                      alt="Support"
+                    />
+                    <span>Support</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">
+                    <img
+                      src="{% static 'dashboard/images/icon/quit.png' %}"
+                      alt="Quit"
+                    />
+                    <span>Quit</span>
+                  </a>
+                </li>
+              </ul>
+              <div class="pt-120">
+                <div class="invite-now">
+                  <div class="img-area">
+                    <img
+                      src="{% static 'dashboard/images/invite-now-illus.png' %}"
+                      alt="Image"
+                    />
+                  </div>
+                  <p>Invite your friend and get $25</p>
+                  <a href="javascript:void(0)" class="cmn-btn">Invite Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- alert start -->
-        
-        {% if messages %}
-            {% for m in messages %}
-            <div class="alert alert-{{m.tags}}">
-                <strong>{{m}}</strong>
-            </div>
-            {% endfor %}
-        {% endif %}
-        <script>
-            setTimeout (() => {
-                $(".alert").alert("close");
-            }, 4000)
-        </script>
-        
-        <!-- alert end -->
+      <!-- alert start -->
+
+      {% if messages %} {% for m in messages %}
+      <div class="alert alert-{{m.tags}}">
+        <strong>{{m}}</strong>
+      </div>
+      {% endfor %} {% endif %}
+      <script>
+        setTimeout(() => {
+          $(".alert").alert("close");
+        }, 4000);
+      </script>
+
+      <!-- alert end -->
     </header>
     <!-- header-section end -->
 
-    {% block content %}
-    
-    {% endblock content %}    
+    {% block content %} {% endblock content %}
 
-
-<!--==================================================================-->
-<script src="{% static 'dashboard/js/jquery.min.js' %}"></script>
-<script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'dashboard/js/jquery-ui.js' %}"></script>
-<script src="{% static 'dashboard/js/plugin/apexcharts.js' %}"></script>
-<script src="{% static 'dashboard/js/plugin/jquery.nice-select.min.js' %}"></script>
-<script src="{% static 'dashboard/js/plugin/waypoint.min.js' %}"></script>
-<script src="{% static 'dashboard/js/plugin/wow.min.js' %}"></script>
-<script src="{% static 'dashboard/js/plugin/plugin.js' %}"></script>
-<script src="{% static 'dashboard/js/main.js' %}"></script>
-</body>
-
+    <!--==================================================================-->
+    <script src="{% static 'dashboard/js/jquery.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/jquery-ui.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugin/apexcharts.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugin/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugin/waypoint.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugin/wow.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugin/plugin.js' %}"></script>
+    <script src="{% static 'dashboard/js/main.js' %}"></script>
+  </body>
 </html>
