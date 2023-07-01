@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
   {% load static %}
+  <!-- head start -->
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      MyFundz - {% block title %}
+      MyFundz -{% block title %}
+
       {% endblock %}
     </title>
+    {% include 'main/css.html' %}
   </head>
+  <!-- head end -->
+
   <body>
+    <!-- start preloader -->
+    {% comment %} <div class="preloader" id="preloader"></div> {% endcomment %}
+    <!-- end preloader -->
+
+    <!-- Scroll To Top Start -->
+    <a href="javascript:void(0)" class="scrollToTop"><i class="fas fa-angle-double-up"></i></a>
+    <!-- Scroll To Top End -->
+
+    <!-- header and nav start-->
+    {% include 'main/navbar.html' %}
+    <!-- END nav -->
+
     {% block content %}
 
-    {% endblock %}
+    {% endblock content%}
 
     {% include 'main/js.html' %}
   </body>
