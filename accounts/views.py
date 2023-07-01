@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from accounts.forms import UserRegisterForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from accounts.models import User
 
@@ -47,3 +47,10 @@ def LoginView(request):
             messages.warning(request, f'A user with the email {email} does not exist. Create an account.')
 
     return render(request, 'accounts/login.html')
+
+def LogoutView(request):
+
+    logout(request)
+    messages.info(request, "You have successfully logged out.") 
+
+    return redirect('login')
