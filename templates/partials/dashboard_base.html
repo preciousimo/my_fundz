@@ -254,6 +254,23 @@
                 </div>
             </div>
         </div>
+
+        <!-- alert start -->
+        
+        {% if messages %}
+            {% for m in messages %}
+            <div class="alert alert-{{m.tags}}">
+                <strong>{{m}}</strong>
+            </div>
+            {% endfor %}
+        {% endif %}
+        <script>
+            setTimeout (() => {
+                $(".alert").alert("close");
+            }, 4000)
+        </script>
+        
+        <!-- alert end -->
     </header>
     <!-- header-section end -->
 
