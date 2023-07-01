@@ -2,12 +2,33 @@ from django.db import models
 import uuid
 from shortuuid.django_fields import ShortUUIDField
 from accounts.models import User
+from django.db.models.signals import post_save
 
 ACCOUNT_STATUS = (
     ("active", "Active"),
     ("pending", "Pending"),
     ("in-active", "In-active")
 )
+
+MARITAL_STATUS = (
+    ("married", "Married"),
+    ("single", "Single"),
+    ("other", "Other")
+)
+
+GENDER = (
+    ("male", "Male"),
+    ("female", "Female"),
+    ("other", "Other")
+)
+
+
+IDENTITY_TYPE = (
+    ("national_id_card", "National ID Card"),
+    ("drivers_licence", "Drives Licence"),
+    ("international_passport", "International Passport")
+)
+
 
 def user_directory_path(instance, filename):
     ext = filename.split(".")[-1]
@@ -35,3 +56,14 @@ class Account(models.Model):
 
     def __str__(self):
         return f"{self.user}"
+    
+def create_account(sender, instance, created, **kwargs):
+    if created:
+        Account.objects.create(user=instance)
+
+def save_account(sender, instance,**kwargs):
+    instance.account.save()
+
+post_save.connect(create_account, sender=User)
+post_save.connect(save_account, sender=User)
+
