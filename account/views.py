@@ -10,12 +10,12 @@ def account(request):
             kyc = KYC.objects.get(user=request.user)
         except:
             messages.warning(request, "You need to submit your kyc")
-            return redirect("kyc-reg")
+            return redirect("account:kyc-reg")
         
         account = Account.objects.get(user=request.user)
     else:
         messages.warning(request, "You need to login to access the dashboard")
-        return redirect("sign-in")
+        return redirect("signin")
 
     context = {
         "kyc":kyc,
