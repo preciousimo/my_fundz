@@ -3,6 +3,8 @@ from account.models import Account
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
+from decimal import Decimal
+from main.models import Transaction
 
 
 @login_required
@@ -33,5 +35,45 @@ def AmountTransfer(request, account_number):
         "account": account,
     }
     return render(request, "transfer/amount_transfer.html", context)
+
+def AmountTransferProcess(request, account_number):
+    account = Account.objects.get(account_number=account_number) 
+    sender = request.user 
+    reciever = account.user
+
+    sender_account = request.user.account
+    reciever_account = account
+
+    if request.method == "POST":
+        amount = request.POST.get("amount-send")
+        description = request.POST.get("description")
+
+        print(amount)
+        print(description)
+
+        if sender_account.account_balance >= Decimal(amount):
+            new_transaction = Transaction.objects.create(
+                user=request.user,
+                amount=amount,
+                description=description,
+                reciever=reciever,
+                sender=sender,
+                sender_account=sender_account,
+                reciever_account=reciever_account,
+                status="processing",
+                transaction_type="transfer"
+            )
+            new_transaction.save()
+            
+            # Get the id of the transaction that vas created nov
+            transaction_id = new_transaction.transaction_id
+            return redirect("transfer-confirmation", account.account_number, transaction_id)
+        else:
+            messages.warning(request, "Insufficient Fund.")
+            return redirect("amount-transfer", account.account_number)
+    else:
+        messages.warning(request, "Error Occured, Try again later.")
+        return redirect("account:account")
+
 
 

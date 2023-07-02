@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="" method="POST">
+                    <form action="{% url 'amount-transfer-process' account.account_number  %}" method="POST">
                         {% csrf_token %}
                         <div class="send-banance">
                             <span class="mdr">You Send</span>
