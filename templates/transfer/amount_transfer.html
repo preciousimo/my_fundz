@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="right">
                                     
-                                    <a href="{% url 'search-account' %}">
+                                    <a href="{% url 'main:search-account' %}">
                                         <i class="icon-h-edit"></i>
                                         Edit
                                     </a>
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-                    <form action="{% url 'amount-transfer-process' account.account_number  %}" method="POST">
+                    <form action="{% url 'main:amount-transfer-process' account.account_number  %}" method="POST">
                         {% csrf_token %}
                         <div class="send-banance">
                             <span class="mdr">You Send</span>

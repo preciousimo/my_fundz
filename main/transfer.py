@@ -30,7 +30,7 @@ def AmountTransfer(request, account_number):
         account = Account.objects.get(account_number=account_number)
     except:
         messages.warning(request, "Account does not exist.")
-        return redirect("core:search-account")
+        return redirect("main:search-account")
     context = {
         "account": account,
     }
@@ -67,10 +67,10 @@ def AmountTransferProcess(request, account_number):
             
             # Get the id of the transaction that vas created nov
             transaction_id = new_transaction.transaction_id
-            return redirect("transfer-confirmation", account.account_number, transaction_id)
+            return redirect("main:transfer-confirmation", account.account_number, transaction_id)
         else:
             messages.warning(request, "Insufficient Fund.")
-            return redirect("amount-transfer", account.account_number)
+            return redirect("main:amount-transfer", account.account_number)
     else:
         messages.warning(request, "Error Occured, Try again later.")
         return redirect("account:account")
@@ -87,3 +87,42 @@ def TransferConfirmation(request, account_number, transaction_id):
         "transaction":transaction
     }
     return render(request, "transfer/transfer_confirmation.html", context)
+
+
+def TransferProcess(request, account_number, transaction_id):
+    account = Account.objects.get(account_number=account_number)
+    transaction = Transaction.objects.get(transaction_id=transaction_id)
+
+    sender = request.user 
+    reciever = account.user
+
+    sender_account = request.user.account 
+    reciever_account = account
+
+    completed = False
+
+    if request.method == "POST":
+        pin_number = request.POST.get("pin-number")
+        print(pin_number)
+
+        if pin_number == sender_account.pin_number:
+            transaction.status = "completed"
+            transaction.save()
+
+            # Remove the amount that i am sending from my account balance and update my account
+            sender_account.account_balance -= transaction.amount
+            sender_account.save()
+
+            # Add the amount that vas removed from my account to the person that i am sending the money too
+            account.account_balance += transaction.amount
+            account.save()
+
+            messages.success(request, "Transfer Successfull.")
+            return redirect("account:account")
+        else:
+            messages.warning(request, "Incorrect Pin.")
+            return redirect('main:transfer-confirmation', account.account_number, transaction.transaction_id)
+    else:
+        messages.warning(request, "An error occured, Try again later.")
+        return redirect('account:account')
+
