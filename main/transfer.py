@@ -118,7 +118,7 @@ def TransferProcess(request, account_number, transaction_id):
             account.save()
 
             messages.success(request, "Transfer Successfull.")
-            return redirect("account:account")
+            return redirect("main:transfer-completed", account.account_number, transaction.transaction_id)
         else:
             messages.warning(request, "Incorrect Pin.")
             return redirect('main:transfer-confirmation', account.account_number, transaction.transaction_id)
@@ -126,3 +126,16 @@ def TransferProcess(request, account_number, transaction_id):
         messages.warning(request, "An error occured, Try again later.")
         return redirect('account:account')
 
+
+def TransferCompleted(request, account_number, transaction_id):
+    try:
+        account = Account.objects.get(account_number=account_number)
+        transaction = Transaction.objects.get(transaction_id=transaction_id)
+    except:
+        messages.warning(request, "Transfer does not exist.")
+        return redirect("account:account")
+    context = {
+        "account":account,
+        "transaction":transaction
+    }
+    return render(request, "transfer/transfer_completed.html", context)
