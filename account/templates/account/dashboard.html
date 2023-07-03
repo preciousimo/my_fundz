@@ -1,0 +1,765 @@
+{% extends "partials/dashboard_base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+    <!-- Dashboard Section start -->
+    <section class="dashboard-section body-collapse">
+        <div class="overlay pt-120">
+            <div class="container-fruid">
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{form.errors}}</strong>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="section-content">
+                            <div class="acc-details">
+                                <div class="top-area">
+                                    <div class="left-side">
+                                        <h5>Hi, {{kyc.full_name|title}}!</h5>
+                                        <h2>${{account.account_balance|intcomma}}</h2>
+                                        
+                                        {% for recent_recieved_transfer in recent_recieved_transfer %}
+                                        <h5 class="receive">Last Received <span>${{recent_recieved_transfer.amount|intcomma}}</span></h5>
+                                            
+                                        {% endfor %}
+                                            
+                                    </div>
+                                    <div class="right-side">
+                                        <div class="right-top">
+                                            <select>
+                                                <option value="1">US Dollar</option>
+                                                <option value="2">US Dollar</option>
+                                                <option value="3">US Dollar</option>
+                                            </select>
+                                            <div class="dropdown-area">
+                                                <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <img src="{% static 'dashboard/images/icon/option.png' %}" alt="icon">
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li><a class="dropdown-item" href="#">Fiat Currency</a></li>
+                                                    <li><a class="dropdown-item" href="#">crypto Currency</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="right-bottom">
+                                            
+                                            {% for recent_transfer in recent_transfer %}
+                                                <h4><small>${{recent_transfer.amount|intcomma}}</small></h4>
+                                            {% endfor %}
+                                            <h5><small>Recent Transfer</small></h5>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="bottom-area">
+                                    <div class="left-side">
+                                        <a href="{% url 'main:search-account' %}" class="cmn-btn">Transfer Money</a>
+                                        <a href="" class="cmn-btn">Receive Money</a>
+                                        <a href="withdraw-money-step-1.html" class="cmn-btn">All Cards</a>
+                                    </div>
+                                    <div class="right-side">
+                                        <div class="dropdown-area">
+                                            <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src="{% static 'dashboard/images/icon/option.png' %}" alt="icon">
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="transactions-area">
+                                <div class="section-text">
+                                    <h5>Transactions</h5>
+                                    <p>Updated every several minutes</p>
+                                </div>
+                                <div class="top-area d-flex align-items-center justify-content-between">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="latest-tab" data-bs-toggle="tab" data-bs-target="#latest" type="button" role="tab" aria-controls="latest" aria-selected="true">Sent</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="upcoming-tab" data-bs-toggle="tab" data-bs-target="#upcoming" type="button" role="tab" aria-controls="upcoming" aria-selected="false">Received</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="sender-request-tab" data-bs-toggle="tab" data-bs-target="#sender-request" type="button" role="tab" aria-controls="upcoming" aria-selected="false">Sent Requests</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="reciever-request-tab" data-bs-toggle="tab" data-bs-target="#reciever-request" type="button" role="tab" aria-controls="upcoming" aria-selected="false">Received Requests</button>
+                                        </li>
+                                    </ul>
+                                    <div class="view-all d-flex align-items-center">
+                                        <a href="{% url 'main:transactions' %}">View All</a>
+                                        <img src="{% static 'dashboard/images/icon/right-arrow.png' %}" alt="icon">
+                                    </div>
+                                </div>
+                                <div class="tab-content mt-40">
+                                    <div class="tab-pane fade show active" id="latest" role="tabpanel" aria-labelledby="latest-tab">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Name/ Business</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    {% for s in sender_transaction %}
+                                                        <tr data-bs-toggle="modal" data-bs-target="#transactionsMod">
+                                                            <th scope="row">
+                                                                <p>{{s.reciever.kyc.full_name|title}}</p>
+                                                                <p class="mdr">{{s.transaction_type|title}}</p>
+                                                            </th>
+                                                            <td>
+                                                                <p><small>{{s.date|date:"h:i"}}</small></p>
+                                                                <p class="mdr">{{s.date|date:"d M, Y"}}</p>
+                                                            </td>
+                                                            <td>
+                                                                {% if s.status == 'completed' %}
+                                                                    <p class="text-success">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'pending' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'failed' %}
+                                                                    <p class="danger">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'processing' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <p>-${{s.amount|intcomma}}</p>
+                                                            </td>
+                                                            <td>
+                                                                <a href="{% url 'main:transaction-detail' s.transaction_id %}" class=""><i class="fas fa-eye"></i></a>
+
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="upcoming" role="tabpanel" aria-labelledby="upcoming-tab">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Name/ Business</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    {% for s in reciever_transaction %}
+                                                        <tr data-bs-toggle="modal" data-bs-target="#transactionsMod">
+                                                            <th scope="row">
+                                                                <p>{{s.sender.kyc.full_name|title}}</p>
+                                                                <p class="mdr">{{s.transaction_type|title}}</p>
+                                                            </th>
+                                                            <td>
+                                                                <p><small>{{s.date|date:"h:i"}}</small></p>
+                                                                <p class="mdr">{{s.date|date:"d M, Y"}}</p>
+                                                            </td>
+                                                            <td>
+                                                                {% if s.status == 'completed' %}
+                                                                    <p class="text-success">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'pending' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'failed' %}
+                                                                    <p class="danger">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'processing' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <p>+${{s.amount|intcomma}}</p>
+                                                            </td>
+                                                            <td>
+                                                                <a href="{% url 'main:transaction-detail' s.transaction_id %}" class=""><i class="fas fa-eye"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="sender-request" role="tabpanel" aria-labelledby="sender-request-tab">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Name/ Business</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    {% for s in request_sender_transaction %}
+                                                        <tr data-bs-toggle="modal" data-bs-target="#transactionsMod">
+                                                            <th scope="row">
+                                                                <p>{{s.reciever.kyc.full_name|title}}</p>
+                                                                <p class="mdr">{{s.transaction_type|title}}</p>
+                                                            </th>
+                                                            <td>
+                                                                <p><small>{{s.date|date:"h:i"}}</small></p>
+                                                                <p class="mdr">{{s.date|date:"d M, Y"}}</p>
+                                                            </td>
+                                                            <td>
+                                                                {% if s.status == 'completed' %}
+                                                                    <p class="text-success">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'pending' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'failed' %}
+                                                                    <p class="danger">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'processing' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'request_sent' %}
+                                                                    <p class="text-success">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'request_settled' %}
+                                                                    <p class="text-success">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'request_processing' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <p>+${{s.amount|intcomma}}</p>
+                                                            </td>
+                                                            <td>
+                                                                {% if s.status == "request_sent" %}
+                                                                <a href="{% url 'main:transaction-detail' s.transaction_id %}" class="btn btn-primary"><i class="fas fa-eye"></i> View</a>
+                                                                <a href="{% url 'main:delete-request' s.sender.account.account_number s.transaction_id %}" class=" btn btn-danger"> <i class="fas fa-x"></i> Delete</a>
+                                                                {% endif %}
+
+                                                                {% if s.status == "request_processing" %}
+                                                                <a href="{% url 'main:transaction-detail' s.transaction_id %}" class="btn btn-primary"><i class="fas fa-eye"></i> View</a>
+                                                                <a href="{% url 'main:delete-request' s.sender.account.account_number s.transaction_id %}" class=" btn btn-danger"> <i class="fas fa-x"></i> Delete</a>
+                                                                {% endif %}
+
+                                                                {% if s.status == "request_settled" %}
+                                                                <a class="btn btn-success"><i class="fas fa-check-circle"></i> Settled</a>
+                                                                {% endif %}
+
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="reciever-request" role="tabpanel" aria-labelledby="reciever-request-tab">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Name/ Business</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    {% for s in request_reciever_transaction %}
+                                                        <tr data-bs-toggle="modal" data-bs-target="#transactionsMod">
+                                                            <th scope="row">
+                                                                <p>{{s.sender.kyc.full_name|title}}</p>
+                                                                <p class="mdr">{{s.transaction_type|title}}</p>
+                                                            </th>
+                                                            <td>
+                                                                <p><small>{{s.date|date:"h:i"}}</small></p>
+                                                                <p class="mdr">{{s.date|date:"d M, Y"}}</p>
+                                                            </td>
+                                                            <td>
+                                                                {% if s.status == 'completed' %}
+                                                                    <p class="text-success">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'pending' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'failed' %}
+                                                                    <p class="danger">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'processing' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'request_sent' %}
+                                                                <p class="text-success">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'request_settled' %}
+                                                                    <p class="text-success">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                                {% if s.status == 'request_processing' %}
+                                                                    <p class="inprogress">{{s.status|title}}</p>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                <p>+${{s.amount|intcomma}}</p>
+                                                            </td>
+                                                            <td>
+                                                                
+                                                                {% if s.status == "request_sent" %}
+                                                                    <a href="{% url 'main:settlement-confirmation' s.sender.account.account_number s.transaction_id %}" class="btn btn-primary"><i class="fas fa-check-circle"></i> Settle</a>
+                                                                    <a href="{% url 'main:transaction-detail' s.transaction_id %}" class=" btn btn-danger"> <i class="fas fa-x"></i> Cancel</a>
+                                                                {% endif %}
+
+                                                                {% if s.status == "request_settled" %}
+                                                                    <a href="" class="btn btn-success"><i class="fas fa-check-circle"></i> Settled</a>
+                                                                {% endif %}
+                                                                    
+                                                            </td>
+                                                        </tr>
+                                                    {% empty %}
+                                                    <li>No Received Requests</li>
+                                                    {% endfor %}
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="side-items">
+                            <div class="single-item">
+                                <div class="section-text d-flex align-items-center justify-content-between">
+                                    <h6>Linked Payment system</h6>
+                                    <div class="right-side">
+                                        <div class="dropdown-area">
+                                            <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src="{% static 'dashboard/images/icon/option.png' %}" alt="icon">
+                                            </button>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    
+                                    {% for c in credit_card %}
+                                        <a href="{% url 'main:card-detail' c.card_id %}">
+                                            <div class="col-12">
+                                                <div class="card__main">
+                                                    <div class="{% if c.card_type == 'verve' %}Front_card{% endif %}    {% if c.card_type == 'master' %}masterCard{% endif %}    {% if c.card_type == 'visa' %}visaCard{% endif %}">
+                                                    <div class="top_card">
+                                                        <span class="visa">{{c.card_type|upper}}</span>
+                                                        <div class="logo">
+                                                            <img src="{% static 'dashboard/images/logo.png' %}" class="logo" alt="logo">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="middle_card">
+                                                        <span class="chip"></span>
+                                                        <div class="card_number">{{c.number}}</div>
+                                                    </div>
+                                                    <div class="bottom_card">
+                                                        <div class="card_info">
+                                                        <div class="card_holder_name">${{c.amount|intcomma}}</div>
+                                                        <div class="card_holder_name">{{c.name}}</div>
+                                                        </div>
+                                                        <div class="card_info">
+                                                        <div class="card_holder_info">
+                                                            <span class="expire_month" >{{c.month}}</span>
+                                                            <span class="slash">/</span>
+                                                            <span class="expire_year">{{c.year}}</span>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <div class="back_card">
+                                                    <div class="top_card">
+                                                        <span class="black_strip"></span>
+                                                        <div class="cvc_strip">
+                                                        <span class="cvc_number">000</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bottom_card">
+                                                        <div class="flex">
+                                                        <span class="sticker"></span>
+                                                        <div class="logo1">
+                                                            <span></span>
+                                                            <span></span>
+                                                            <span></span>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                    
+                                    <div class="col-4">
+                                        <div class="single-card">
+                                            <button type="button" class="reg w-100" data-bs-toggle="modal" data-bs-target="#addcardMod">
+                                                <img src="{% static 'dashboard/images/add-new.png' %}" alt="image" class="w-100">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="single-item">
+                                <div class="section-text d-flex align-items-center justify-content-between">
+                                    <h6>Payment Analytics</h6>
+                                    <div class="select-box">
+                                        <select>
+                                            <option>Monthly</option>
+                                            <option value="1">Jan</option>
+                                            <option value="2">Feb</option>
+                                            <option value="3">Mar</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="chart"></div>
+                            </div>
+                            <div class="single-item">
+                                <div class="section-text d-flex align-items-center justify-content-between">
+                                    <h6>Notification ({{notifications.count}})</h6>
+                                    <div class="view-all d-flex align-items-center">
+                                        <a href="javascript:void(0)">View All</a>
+                                        <img src="{% static 'dashboard/images/icon/right-arrow.png' %}" alt="icon">
+                                    </div>
+                                </div>
+                                <ul class="recipients-item">
+                                    {% for n in notifications %}
+                                        <li>
+                                            
+                                            <a href="javascript:void(0)" class="d-flex">
+                                                <div class="text-area">
+                                                    
+                                                    {% if n.notification_type == "Credit Alert" %}
+                                                    <p class="mdr">You received a payment of <b>${{n.amount}}</b></p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Debit Alert" %}
+                                                    <p class="mdr">You sent a payment of <b>${{n.amount}}</b></p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Sent Payment Request" %}
+                                                    <p class="mdr">You sent a <b>payment request</b> of <b>${{n.amount}}</b></p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Recieved Payment Request" %}
+                                                    <p class="mdr">You received a <b>payment request</b> of <b>${{n.amount}}</b></p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Funded Credit Card" %}
+                                                    <p class="mdr">You funded your credit card with <b>${{n.amount}}</b></p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Withdrew Credit Card Funds" %}
+                                                    <p class="mdr">You withdrew <b>${{n.amount}}</b> from your credit card</p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Deleted Credit Card" %}
+                                                    <p class="mdr">You deleted your credit card</p>
+                                                    {% endif %}
+                                                    {% if n.notification_type == "Added Credit Card" %}
+                                                    <p class="mdr">You added a new  credit card</p>
+                                                    {% endif %}
+                                                        
+                                                    <p class="mdr time-area">{{n.date}}</p>
+                                                </div>
+                                            </a>
+                                            <i class="fa-solid fa-caret-right"></i>
+                                        </li>
+                                        {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Dashboard Section end -->
+
+    <!-- Card Popup start -->
+    <div class="card-popup">
+        <div class="container-fruid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="modal fade" id="cardMod" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-center">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                                <div class="main-content">
+                                    <div class="top-area mb-40 mt-40 text-center">
+                                        <div class="card-area mb-30">
+                                            <img src="{% static 'dashboard/images/visa-card-2.png' %}" alt="image">
+                                        </div>
+                                        <div class="text-area">
+                                            <h5>Paylio payment Card </h5>
+                                            <p>Linked: 01 Jun 2021</p>
+                                        </div>
+                                    </div>
+                                    <div class="tab-area d-flex align-items-center justify-content-between">
+                                        <ul class="nav nav-tabs mb-30" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="btn-link" id="cancel-tab" data-bs-toggle="tab" data-bs-target="#cancel" type="button" role="tab" aria-controls="cancel" aria-selected="false">
+                                                    <img src="{% static 'dashboard/images/icon/limit.png' %}" alt="icon">
+                                                    Set transfer limit
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="d-none" id="limit-tab" data-bs-toggle="tab" data-bs-target="#limit" type="button" role="tab" aria-controls="limit" aria-selected="true"></button>
+                                            </li>
+                                            <li>
+                                                <button>
+                                                    <img src="{% static 'dashboard/images/icon/remove.png' %}" alt="icon">
+                                                    Remove from Linked
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-content mt-30">
+                                        <div class="tab-pane fade show active" id="limit" role="tabpanel" aria-labelledby="limit-tab">
+                                            <div class="bottom-area">
+                                                <p class="history">Transaction History : <span>20</span></p>
+                                                <ul>
+                                                    <li>
+                                                        <p class="left">
+                                                            <span>03:00 PM</span>
+                                                            <span>17 Oct, 2020</span>
+                                                        </p>
+                                                        <p class="right">
+                                                            <span>$160.48</span>
+                                                            <span>Withdraw</span>
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p class="left">
+                                                            <span>01:09 PM</span>
+                                                            <span>15 Oct, 2021</span>
+                                                        </p>
+                                                        <p class="right">
+                                                            <span>$106.58</span>
+                                                            <span>Withdraw</span>
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p class="left">
+                                                            <span>04:00 PM</span>
+                                                            <span>12 Oct, 2020</span>
+                                                        </p>
+                                                        <p class="right">
+                                                            <span>$176.58</span>
+                                                            <span>Withdraw</span>
+                                                        </p>
+                                                    </li>
+                                                    <li>
+                                                        <p class="left">
+                                                            <span>06:00 PM</span>
+                                                            <span>25 Oct, 2020</span>
+                                                        </p>
+                                                        <p class="right">
+                                                            <span>$167.85</span>
+                                                            <span>Withdraw</span>
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="cancel" role="tabpanel" aria-labelledby="cancel-tab">
+                                            <div class="main-area">
+                                                <div class="transfer-area">
+                                                    <p>Set a transfer limit for paylio payment Card</p>
+                                                    <p class="mdr">Transfer Limit</p>
+                                                </div>
+                                                <form action="#">
+                                                    <div class="input-area">
+                                                        <input class="xxlr" placeholder="400.00" type="number">
+                                                        <select>
+                                                            <option value="1">USD</option>
+                                                            <option value="2">USD</option>
+                                                            <option value="3">USD</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="bottom-area d-flex align-items-center justify-content-between">
+                                                        <a href="javascript:void(0)" class="cmn-btn cancel">Cancel and
+                                                            Back</a>
+                                                        <a href="javascript:void(0)" class="cmn-btn">Confirm Transfer
+                                                            Limit</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Card Popup start -->
+
+    <!-- Add Card Popup start -->
+    <div class="add-card">
+        <div class="container-fruid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="modal fade" id="addcardMod" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-between">
+                                    <h6>Add Card</h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-12">
+                                            <div class="single-input">
+                                                <label for="cardNumber">Card name</label>
+                                                <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                                {{form.name}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="single-input">
+                                                <label for="cardNumber">Card Number</label>
+                                                <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                                {{form.number}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="single-input">
+                                                <label for="cardNumber">Expiry Month</label>
+                                                <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                                {{form.month}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="single-input">
+                                                <label for="cardNumber">Expiry Year</label>
+                                                <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                                {{form.year}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="single-input">
+                                                <label for="cardNumber">CVV</label>
+                                                <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                                {{form.cvv}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="single-input">
+                                                <label for="cardNumber">Card Type</label>
+                                                <!-- <input type="text" id="cardNumber" placeholder="5890 - 6858 - 6332 - 9843"> -->
+                                                {{form.card_type}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="btn-border w-100">
+                                                <button type="submit" class="cmn-btn w-100">Add Card</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Card Popup start -->
+
+    <!-- Transactions Popup start -->
+    <div class="transactions-popup">
+        <div class="container-fruid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="modal fade" id="transactionsMod" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-between">
+                                    <h5>Transaction Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                                <div class="main-content">
+                                    <div class="row">
+                                        <div class="col-sm-5 text-center">
+                                            <div class="icon-area">
+                                                <img src="{% static 'dashboard/images/icon/transaction-details-icon.png' %}" alt="icon">
+                                            </div>
+                                            <div class="text-area">
+                                                <h6>Envato Pty Ltd</h6>
+                                                <p>16 Jan 2022</p>
+                                                <h3>717.14 USD</h3>
+                                                <p class="com">Completed</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div class="right-area">
+                                                <h6>Transaction Details</h6>
+                                                <ul class="payment-details">
+                                                    <li>
+                                                        <span>Payment Amount</span>
+                                                        <span>718.64 USD</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>Fee</span>
+                                                        <span>1.50 USD</span>
+                                                    </li>
+                                                    <li>
+                                                        <span>Total Amount</span>
+                                                        <span>717.14 USD</span>
+                                                    </li>
+                                                </ul>
+                                                <ul class="payment-info">
+                                                    <li>
+                                                        <p>Payment From</p>
+                                                        <span class="mdr">Envato Pty Ltd</span>
+                                                    </li>
+                                                    <li>
+                                                        <p>Payment Description</p>
+                                                        <span class="mdr">Envato Feb 2022 Member Payment</span>
+                                                    </li>
+                                                    <li>
+                                                        <p>Transaction ID:</p>
+                                                        <span class="mdr">6559595979565959895559595</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Transactions Popup start -->
+    {% endblock content %}
