@@ -256,7 +256,7 @@
               </div>
               <ul>
                 <li class="active">
-                  <a href="dashboard.html">
+                  <a href="{% url 'account:dashboard' %}">
                     <img
                       src="{% static 'dashboard/images/icon/dashboard.png' %}"
                       alt="Dashboard"
@@ -265,7 +265,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="transactions.html">
+                  <a href="{% url 'main:transactions' %}">
                     <img
                       src="{% static 'dashboard/images/icon/transactions.png' %}"
                       alt="Transactions"
@@ -274,7 +274,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="pay.html">
+                  <a href="{% url 'main:search-account' %}">
                     <img
                       src="{% static 'dashboard/images/icon/pay.png' %}"
                       alt="Pay"
@@ -283,7 +283,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="receive-step-1.html">
+                  <a href="{% url 'main:request-search-account' %}">
                     <img
                       src="{% static 'dashboard/images/icon/receive.png' %}"
                       alt="Receive"
