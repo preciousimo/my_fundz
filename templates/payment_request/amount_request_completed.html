@@ -1,0 +1,31 @@
+{% extends "partials/dashboard_base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <!-- Dashboard Section start -->
+    <section class="dashboard-section body-collapse pay step step-2 step-3 receive-3">
+        <div class="overlay pt-120">
+            <div class="container-fruid">
+                <div class="main-content">
+                    <div class="head-area d-flex align-items-center justify-content-between">
+                        <h4>Request Payment</h4>
+                        <div class="icon-area">
+                        </div>
+                    </div>
+                    <div class="request-submitted pb-120 text-center">
+                        <div class="top-area">
+                            <div class="icon-area">
+                                <img src="{% static 'dashboard/images/icon/submitted-icon.png' %}" alt="icon">
+                            </div>
+                            <h3>Sent!</h3>
+                            <p>Payment Request <b>{{transaction.transaction_id}}</b> was sent to <b>{{account.user.kyc.full_name}}</b></p>
+                            <h5><a href=""><b>View Detail</b></a> | <a href=""><b>Send Another Payment</b></a></h5>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Dashboard Section end -->
+{% endblock content %}
