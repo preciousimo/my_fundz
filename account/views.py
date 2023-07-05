@@ -3,8 +3,9 @@ from account.models import KYC, Account
 from account.forms import KYCForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from main.forms import CreditCardForm
+from main.models import CreditCard, Transaction
 
-from main.models import Transaction
 
 def account(request):
     if request.user.is_authenticated:
@@ -43,7 +44,7 @@ def kyc_registration(request):
             new_form.account = account
             new_form.save()
             messages.success(request, "KYC Form submitted successfully, In review now.")
-            return redirect("/")
+            return redirect("account:account")
     else:
         form = KYCForm(instance=kyc)
     context = {
@@ -73,13 +74,30 @@ def dashboard(request):
         
         
         account = Account.objects.get(user=request.user)
+        credit_card = CreditCard.objects.filter(user=request.user).order_by("-id")
+
+        if request.method == "POST":
+            form = CreditCardForm(request.POST)
+            if form.is_valid():
+                new_form = form.save(commit=False)
+                new_form.user = request.user 
+                new_form.save()
+                
+                card_id = new_form.card_id
+                messages.success(request, "Card Added Successfully.")
+                return redirect("account:dashboard")
+        else:
+            form = CreditCardForm()
+
     else:
         messages.warning(request, "You need to login to access the dashboard")
-        return redirect("userauths:sign-in")
+        return redirect("accounts:sign-in")
 
     context = {
         "kyc":kyc,
         "account":account,
+        "form":form,
+        "credit_card":credit_card,
         "sender_transaction":sender_transaction,
         "reciever_transaction":reciever_transaction,
 
@@ -89,3 +107,4 @@ def dashboard(request):
         'recent_recieved_transfer':recent_recieved_transfer,
     }
     return render(request, "account/dashboard.html", context)
+    
