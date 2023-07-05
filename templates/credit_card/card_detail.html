@@ -224,7 +224,7 @@
                                 <h6>Withdraw from Card</h6>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                             </div>
-                            <form action="" method="POST">
+                            <form action="{% url 'main:withdraw_fund' credic_card.card_id %}" method="POST">
                                 {% csrf_token %}
                                 <div class="row justify-content-center">
                                     
