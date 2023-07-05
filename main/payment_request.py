@@ -157,7 +157,7 @@ def settlement_completed(request, account_number ,transaction_id):
     return render(request, "payment_request/settlement_completed.html", context)
 
 
-def deletepaymentrequest(request, account_number ,transaction_id):
+def delete_payment_request(request, account_number ,transaction_id):
     account = Account.objects.get(account_number=account_number)
     transaction = Transaction.objects.get(transaction_id=transaction_id)
 
