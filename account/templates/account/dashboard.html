@@ -3,6 +3,20 @@
 {% load humanize %}
 {% block content %}
 
+<style>
+    .cardLogo {
+      font-size: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      color: pink;
+      transition: color 0.3s;
+    }
+  
+    .cardLogo:hover {
+      color: orange;
+    }
+  </style>
+
     <!-- Dashboard Section start -->
     <section class="dashboard-section body-collapse">
         <div class="overlay pt-120">
@@ -367,15 +381,15 @@
                                     
                                     
                                     {% for c in credit_card %}
-                                        <a href="{% url 'main:card-detail' c.card_id %}">
+                                        <a href="">
                                             <div class="col-12">
                                                 <div class="card__main">
                                                     <div class="{% if c.card_type == 'verve' %}Front_card{% endif %}    {% if c.card_type == 'master' %}masterCard{% endif %}    {% if c.card_type == 'visa' %}visaCard{% endif %}">
                                                     <div class="top_card">
                                                         <span class="visa">{{c.card_type|upper}}</span>
                                                         <div class="logo">
-                                                            <img src="{% static 'dashboard/images/logo.png' %}" class="logo" alt="logo">
-
+                                                            {% comment %} <img src="{% static 'dashboard/images/logo.png' %}" class="logo" alt="logo"> {% endcomment %}
+                                                            <p class="cardLogo">MyFundz</p>
                                                         </div>
                                                     </div>
                                                     <div class="middle_card">
