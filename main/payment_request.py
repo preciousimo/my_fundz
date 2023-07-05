@@ -118,7 +118,7 @@ def settlement_processing(request, account_number, transaction_id):
     transaction = Transaction.objects.get(transaction_id=transaction_id)
 
     sender = request.user 
-    sender_account = request.user.account ## me, 
+    sender_account = request.user.account
 
     if request.method == "POST":
         pin_number = request.POST.get("pin-number")
@@ -146,7 +146,7 @@ def settlement_processing(request, account_number, transaction_id):
         return redirect("account:dashboard")
 
 
-def SettlementCompleted(request, account_number ,transaction_id):
+def settlement_completed(request, account_number ,transaction_id):
     account = Account.objects.get(account_number=account_number)
     transaction = Transaction.objects.get(transaction_id=transaction_id)
     
@@ -154,7 +154,7 @@ def SettlementCompleted(request, account_number ,transaction_id):
             "account":account,
             "transaction":transaction,
         }
-    return render(request, "payment_request/settlement-completed.html", context)
+    return render(request, "payment_request/settlement_completed.html", context)
 
 
 def deletepaymentrequest(request, account_number ,transaction_id):
