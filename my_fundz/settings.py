@@ -199,4 +199,4 @@ JAZZMIN_UI_TWEAKS = {
     }
 }
 
-CSRF_TRUSTED_ORIGINS = ['https://myfundz.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['https://myfundz.up.railway.app']
