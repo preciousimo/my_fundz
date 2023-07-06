@@ -33,10 +33,10 @@
                                 <div class="top-area">
                                     <div class="left-side">
                                         <h5>Hi, {{kyc.full_name|title}}!</h5>
-                                        <h2>${{account.account_balance|intcomma}}</h2>
+                                        <h2>₦{{account.account_balance|intcomma}}</h2>
                                         
                                         {% for recent_recieved_transfer in recent_recieved_transfer %}
-                                        <h5 class="receive">Last Received <span>${{recent_recieved_transfer.amount|intcomma}}</span></h5>
+                                        <h5 class="receive">Last Received <span>{{recent_recieved_transfer.amount|intcomma}}</span></h5>
                                             
                                         {% endfor %}
                                             
@@ -44,9 +44,9 @@
                                     <div class="right-side">
                                         <div class="right-top">
                                             <select>
-                                                <option value="1">US Dollar</option>
-                                                <option value="2">US Dollar</option>
-                                                <option value="3">US Dollar</option>
+                                                <option value="1">Dollar</option>
+                                                <option value="2">Naira</option>
+                                                <option value="3">Euro</option>
                                             </select>
                                             <div class="dropdown-area">
                                                 <button type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,7 +61,7 @@
                                         <div class="right-bottom">
                                             
                                             {% for recent_transfer in recent_transfer %}
-                                                <h4><small>${{recent_transfer.amount|intcomma}}</small></h4>
+                                                <h4><small>₦{{recent_transfer.amount|intcomma}}</small></h4>
                                             {% endfor %}
                                             <h5><small>Recent Transfer</small></h5>
                                         </div>
@@ -72,7 +72,7 @@
                                     <div class="left-side">
                                         <a href="{% url 'main:search-account' %}" class="cmn-btn">Transfer Money</a>
                                         <a href="{% url 'main:request-search-account' %}" class="cmn-btn">Receive Money</a>
-                                        <a href="withdraw-money-step-1.html" class="cmn-btn">All Cards</a>
+                                        <a href="#" class="cmn-btn">All Cards</a>
                                     </div>
                                     <div class="right-side">
                                         <div class="dropdown-area">
@@ -151,7 +151,7 @@
                                                                 {% endif %}
                                                             </td>
                                                             <td>
-                                                                <p>-${{s.amount|intcomma}}</p>
+                                                                <p>-₦{{s.amount|intcomma}}</p>
                                                             </td>
                                                             <td>
                                                                 <a href="{% url 'main:transaction-detail' s.transaction_id %}" class=""><i class="fas fa-eye"></i></a>
@@ -203,7 +203,7 @@
                                                                 {% endif %}
                                                             </td>
                                                             <td>
-                                                                <p>+${{s.amount|intcomma}}</p>
+                                                                <p>+₦{{s.amount|intcomma}}</p>
                                                             </td>
                                                             <td>
                                                                 <a href="{% url 'main:transaction-detail' s.transaction_id %}" class=""><i class="fas fa-eye"></i></a>
@@ -263,7 +263,7 @@
                                                                 {% endif %}
                                                             </td>
                                                             <td>
-                                                                <p>+${{s.amount|intcomma}}</p>
+                                                                <p>+₦{{s.amount|intcomma}}</p>
                                                             </td>
                                                             <td>
                                                                 {% if s.status == "request_sent" %}
@@ -336,7 +336,7 @@
                                                                 {% endif %}
                                                             </td>
                                                             <td>
-                                                                <p>+${{s.amount|intcomma}}</p>
+                                                                <p>+₦{{s.amount|intcomma}}</p>
                                                             </td>
                                                             <td>
                                                                 
@@ -398,7 +398,7 @@
                                                     </div>
                                                     <div class="bottom_card">
                                                         <div class="card_info">
-                                                        <div class="card_holder_name">${{c.amount|intcomma}}</div>
+                                                        <div class="card_holder_name">₦{{c.amount|intcomma}}</div>
                                                         <div class="card_holder_name">{{c.name}}</div>
                                                         </div>
                                                         <div class="card_info">
@@ -472,22 +472,22 @@
                                                 <div class="text-area">
                                                     
                                                     {% if n.notification_type == "Credit Alert" %}
-                                                    <p class="mdr">You received a payment of <b>${{n.amount}}</b></p>
+                                                    <p class="mdr">You received a payment of <b>₦{{n.amount}}</b></p>
                                                     {% endif %}
                                                     {% if n.notification_type == "Debit Alert" %}
-                                                    <p class="mdr">You sent a payment of <b>${{n.amount}}</b></p>
+                                                    <p class="mdr">You sent a payment of <b>₦{{n.amount}}</b></p>
                                                     {% endif %}
                                                     {% if n.notification_type == "Sent Payment Request" %}
-                                                    <p class="mdr">You sent a <b>payment request</b> of <b>${{n.amount}}</b></p>
+                                                    <p class="mdr">You sent a <b>payment request</b> of <b>₦{{n.amount}}</b></p>
                                                     {% endif %}
                                                     {% if n.notification_type == "Recieved Payment Request" %}
-                                                    <p class="mdr">You received a <b>payment request</b> of <b>${{n.amount}}</b></p>
+                                                    <p class="mdr">You received a <b>payment request</b> of <b>₦{{n.amount}}</b></p>
                                                     {% endif %}
                                                     {% if n.notification_type == "Funded Credit Card" %}
-                                                    <p class="mdr">You funded your credit card with <b>${{n.amount}}</b></p>
+                                                    <p class="mdr">You funded your credit card with <b>₦{{n.amount}}</b></p>
                                                     {% endif %}
                                                     {% if n.notification_type == "Withdrew Credit Card Funds" %}
-                                                    <p class="mdr">You withdrew <b>${{n.amount}}</b> from your credit card</p>
+                                                    <p class="mdr">You withdrew <b>₦{{n.amount}}</b> from your credit card</p>
                                                     {% endif %}
                                                     {% if n.notification_type == "Deleted Credit Card" %}
                                                     <p class="mdr">You deleted your credit card</p>
@@ -563,7 +563,7 @@
                                                             <span>17 Oct, 2020</span>
                                                         </p>
                                                         <p class="right">
-                                                            <span>$160.48</span>
+                                                            <span>₦160.48</span>
                                                             <span>Withdraw</span>
                                                         </p>
                                                     </li>
@@ -573,7 +573,7 @@
                                                             <span>15 Oct, 2021</span>
                                                         </p>
                                                         <p class="right">
-                                                            <span>$106.58</span>
+                                                            <span>₦106.58</span>
                                                             <span>Withdraw</span>
                                                         </p>
                                                     </li>
@@ -583,7 +583,7 @@
                                                             <span>12 Oct, 2020</span>
                                                         </p>
                                                         <p class="right">
-                                                            <span>$176.58</span>
+                                                            <span>₦176.58</span>
                                                             <span>Withdraw</span>
                                                         </p>
                                                     </li>
@@ -593,7 +593,7 @@
                                                             <span>25 Oct, 2020</span>
                                                         </p>
                                                         <p class="right">
-                                                            <span>$167.85</span>
+                                                            <span>₦167.85</span>
                                                             <span>Withdraw</span>
                                                         </p>
                                                     </li>

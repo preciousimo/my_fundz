@@ -126,7 +126,7 @@
                           </div>
                           <div class="text-area">
                             <p class="mdr">
-                              You received a payment of <b>$134.00</b> from
+                              You received a payment of <b>₦134.00</b> from
                               <b>Anna Green</b>
                             </p>
                             <p class="mdr time-area">09.39AM</p>
@@ -183,7 +183,7 @@
                           </div>
                           <div class="text-area">
                             <p class="mdr">
-                              You received a payment of <b>$250.00</b> from
+                              You received a payment of <b>₦250.00</b> from
                               Goerge Michael
                             </p>
                             <p class="mdr time-area">Yesterday</p>
@@ -292,7 +292,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="money-exchange.html">
+                  <a href="#">
                     <img
                       src="{% static 'dashboard/images/icon/exchange.png' %}"
                       alt="Exchange"
@@ -301,7 +301,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="recipients.html">
+                  <a href="#">
                     <img
                       src="{% static 'dashboard/images/icon/recipients.png' %}"
                       alt="Recipients"
@@ -310,16 +310,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="crypto.html">
-                    <img
-                      src="{% static 'dashboard/images/icon/crypto.png' %}"
-                      alt="Crypto"
-                    />
-                    <span>Crypto</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="deposit-money.html">
+                  <a href="#">
                     <img
                       src="{% static 'dashboard/images/icon/deposit.png' %}"
                       alt="Deposit"
@@ -328,7 +319,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="withdraw-money-step-1.html">
+                  <a href="#">
                     <img
                       src="{% static 'dashboard/images/icon/withdraw.png' %}"
                       alt="Withdraw"
@@ -339,7 +330,7 @@
               </ul>
               <ul class="bottom-item">
                 <li>
-                  <a href="account.html">
+                  <a href="{% url 'account:account' %}">
                     <img
                       src="{% static 'dashboard/images/icon/account.png' %}"
                       alt="Account"
@@ -357,7 +348,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="javascript:void(0)">
+                  <a href="{% url 'logout' %}">
                     <img
                       src="{% static 'dashboard/images/icon/quit.png' %}"
                       alt="Quit"
@@ -374,7 +365,7 @@
                       alt="Image"
                     />
                   </div>
-                  <p>Invite your friend and get $25</p>
+                  <p>Invite your friend and get ₦1000</p>
                   <a href="javascript:void(0)" class="cmn-btn">Invite Now</a>
                 </div>
               </div>
@@ -392,7 +383,7 @@
       {% endfor %} {% endif %}
       <script>
         setTimeout(() => {
-          $(".alert").alert("close");
+          ₦(".alert").alert("close");
         }, 4000);
       </script>
 
