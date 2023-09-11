@@ -22,7 +22,9 @@ RUN set -ex && \
     rm -rf /root/.cache/
 COPY . /code
 
+# Add quotes to the SECRET_KEY environment variable
 ENV SECRET_KEY "fr1%69mb8lejom$wqcx287^xhrso6fr@0$27xhw&q&m)8u&@j0"
+
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
