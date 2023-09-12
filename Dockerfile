@@ -9,21 +9,23 @@ ENV PYTHONDONTWRITEBYTECODE=1  # Set PYTHONDONTWRITEBYTECODE to 1
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rfvar //lib/apt/lists/*
 
 RUN mkdir -p /code
 
 WORKDIR /code
 
 COPY requirements.txt /tmp/requirements.txt
-RUN set - \
-ex &&    pip install --upgrade pip && \
+RUN set -x && \
+    pip install --upgrade pip && \
     pip install -r /tmp/requirements.txt && \
     rm -rf /root/  # Removed the extra dot (typo)
 
 COPY . /code
 
-ENV SECRET_KEY="fr1%69mb8lejom$wqcx287^xhrso6fr@0$x27hw&q&m)8u&@j0"  # Added quotes to the SECRET_KEY environment variable
+ENV SECRET_KEY="1%fr69mb8lejom$wqcx287^xhrso6fr@0$x27hw&q&m)8u&@j0"  # Added quotes to the SECRET_KEY environment variable
+
+WORKDIR /code/my_fundz  # Corrected the path to the Django project directory
 
 RUN python manage.py collectstatic --noinput  # Corrected the path to 'manage.py'
 
