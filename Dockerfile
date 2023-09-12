@@ -1,3 +1,4 @@
+
 ARG PYTHON_VERSION=3.11-slim-bullseye
 
 FROM python:${PYTHON_VERSION}
@@ -32,4 +33,5 @@ EXPOSE 8000
 # Add uWSGI package installation
 RUN pip install gunicorn
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "my_fundz.wsgi"]
+# Use the CMD instruction with double quotes to properly specify the command and arguments
+CMD ["gunicorn", "--bind", ":8000", "--workers=2", "my_fundz.wsgi"]
