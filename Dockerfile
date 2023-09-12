@@ -25,7 +25,7 @@ COPY . /code
 
 ENV SECRET_KEY="fr1%69mb8lejom$wqcx287^xhrso6fr@0$x27hw&q&m)8u&@j0"  # Added quotes to the SECRET_KEY environment variable
 
-RUN python ./manage.py collectstatic --noinput  # Fixed typo: Changed "manage.py" to "./manage.py" in the command
+RUN python manage.py collectstatic --noinput  # Fixed typo: Changed "manage.py" to "./manage.py" in the command
 
 EXPOSE 8000
 
