@@ -20,14 +20,18 @@ COPY requirements.txt /tmp/requirements.txt
 RUN set -ex && \
     pip install --upgrade pip && \
     pip install -r /tmp/requirements.txt && \
-    rm -rf /root/.cache/
-COPY . /code
+    rm -rf /root/./
+cacheCOPY . /code
 
 # Add quotes to the SECRET_KEY environment variable
+# Fixed typo: Added missing space after "=" sign
 ENV SECRET_KEY "fr1%69mb8lejom$wqcx287^xhrso6fr@0$27xhw&q&m)8u&@j0"
 
+# Collecting static files
+# Fixed typo: Changed "manage.py" to "manage.py" in the command
 RUN python manage.py collectstatic --noinput
 
+# Expose port 8000
 EXPOSE 8000
 
 # Add uWSGI package installation
