@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from account.models import Account
+from userauth.models import Account
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
@@ -73,7 +73,7 @@ def AmountTransferProcess(request, account_number):
             return redirect("main:amount-transfer", account.account_number)
     else:
         messages.warning(request, "Error Occured, Try again later.")
-        return redirect("account:account")
+        return redirect("userauth:account")
     
 def TransferConfirmation(request, account_number, transaction_id):
     try:
@@ -81,7 +81,7 @@ def TransferConfirmation(request, account_number, transaction_id):
         transaction = Transaction.objects.get(transaction_id=transaction_id)
     except:
         messages.warning(request, "Transaction does not exist.")
-        return redirect("account:account")
+        return redirect("userauth:account")
     context = {
         "account":account,
         "transaction":transaction
@@ -124,7 +124,7 @@ def TransferProcess(request, account_number, transaction_id):
             return redirect('main:transfer-confirmation', account.account_number, transaction.transaction_id)
     else:
         messages.warning(request, "An error occured, Try again later.")
-        return redirect('account:account')
+        return redirect('userauth:account')
 
 
 def TransferCompleted(request, account_number, transaction_id):
@@ -133,7 +133,7 @@ def TransferCompleted(request, account_number, transaction_id):
         transaction = Transaction.objects.get(transaction_id=transaction_id)
     except:
         messages.warning(request, "Transfer does not exist.")
-        return redirect("account:account")
+        return redirect("userauth:account")
     context = {
         "account":account,
         "transaction":transaction

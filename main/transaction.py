@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from main.models import Transaction
-from account.models import Account
+from userauth.models import Account
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 

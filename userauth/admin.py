@@ -1,5 +1,5 @@
 from django.contrib import admin
-from account.models import Account, KYC
+from userauth.models import Account, KYC
 from accounts.models import User
 from import_export.admin import ImportExportModelAdmin
 

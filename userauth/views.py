@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from account.models import KYC, Account
-from account.forms import KYCForm
+from userauth.models import KYC, Account
+from userauth.forms import KYCForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from main.forms import CreditCardForm
@@ -13,18 +13,18 @@ def account(request):
             kyc = KYC.objects.get(user=request.user)
         except:
             messages.warning(request, "You need to submit your kyc")
-            return redirect("account:kyc-reg")
+            return redirect("userauth:kyc-reg")
         
         account = Account.objects.get(user=request.user)
     else:
-        messages.warning(request, "You need to login to access the dashboard")
+        messages.warning(request, "You need to login to access the dashoard")
         return redirect("signin")
 
     context = {
         "kyc":kyc,
         "account":account,
     }
-    return render(request, "account/account.html", context)
+    return render(request, "userauth/account.html", context)
 
 @login_required
 def kyc_registration(request):
@@ -44,7 +44,7 @@ def kyc_registration(request):
             new_form.account = account
             new_form.save()
             messages.success(request, "KYC Form submitted successfully, In review now.")
-            return redirect("account:account")
+            return redirect("userauth:account")
     else:
         form = KYCForm(instance=kyc)
     context = {
@@ -52,7 +52,7 @@ def kyc_registration(request):
         "form": form,
         "kyc": kyc,
     }
-    return render(request, "account/kyc_form.html", context)
+    return render(request, "userauth/kyc_form.html", context)
 
 def dashboard(request):
     if request.user.is_authenticated:
@@ -60,7 +60,7 @@ def dashboard(request):
             kyc = KYC.objects.get(user=request.user)
         except:
             messages.warning(request, "You need to submit your kyc")
-            return redirect("account:kyc-reg")
+            return redirect("userauth:kyc-reg")
         
         recent_transfer = Transaction.objects.filter(sender=request.user, transaction_type="transfer", status="completed").order_by("-id")[:1]
         recent_recieved_transfer = Transaction.objects.filter(reciever=request.user, transaction_type="transfer").order_by("-id")[:1]
@@ -85,7 +85,7 @@ def dashboard(request):
                 
                 card_id = new_form.card_id
                 messages.success(request, "Card Added Successfully.")
-                return redirect("account:dashboard")
+                return redirect("userauth:dashboard")
         else:
             form = CreditCardForm()
 
@@ -106,5 +106,5 @@ def dashboard(request):
         'recent_transfer':recent_transfer,
         'recent_recieved_transfer':recent_recieved_transfer,
     }
-    return render(request, "account/dashboard.html", context)
+    return render(request, "userauth/dashboard.html", context)
     

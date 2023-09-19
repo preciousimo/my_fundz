@@ -16,7 +16,7 @@ def RegisterView(request):
             messages.success(request, f"New Account Created: {username}.")
             new_user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password1'])
             login(request, new_user)
-            return redirect('account:account')
+            return redirect('userauth:account')
     else:
         form =  UserRegisterForm()
 
@@ -26,7 +26,7 @@ def RegisterView(request):
 def LoginView(request):
     if request.user.is_authenticated:
         messages.warning(request, "You are already logged in.")
-        return redirect('account:dashboard')
+        return redirect('userauth:dashboard')
     
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -39,7 +39,7 @@ def LoginView(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f"Welcome {email}. You are now logged in.")
-                return redirect('account:dashboard')
+                return redirect('userauth:dashboard')
             else:
                 messages.warning(request, "Incorrect password.")
                 

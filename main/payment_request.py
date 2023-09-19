@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from account.models import Account
+from userauth.models import Account
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
@@ -62,7 +62,7 @@ def AmountRequestProcess(request, account_number):
         return redirect("main:amount-request-confirmation", account.account_number, transaction_id)
     else:
         messages.warning(request, "Error Occured, try again later.")
-        return redirect("account:dashboard")
+        return redirect("userauth:dashboard")
 
 
 def AmountRequestConfirmation(request, account_number, transaction_id):
@@ -89,7 +89,7 @@ def AmountRequestFinalProcess(request, account_number, transaction_id):
             return redirect("main:amount-request-completed", account.account_number, transaction.transaction_id)
     else:
         messages.warning(request, "An Error Occured, try again later.")
-        return redirect("account:dashboard")
+        return redirect("userauth:dashboard")
     
 def RequestCompleted(request, account_number ,transaction_id):
     account = Account.objects.get(account_number=account_number)
@@ -143,7 +143,7 @@ def settlement_processing(request, account_number, transaction_id):
             return redirect("main:settlement-confirmation", account.account_number, transaction.transaction_id)
     else:
         messages.warning(request, "Error Occured")
-        return redirect("account:dashboard")
+        return redirect("userauth:dashboard")
 
 
 def settlement_completed(request, account_number ,transaction_id):

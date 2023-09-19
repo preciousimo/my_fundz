@@ -1,6 +1,6 @@
 from django.db import models
 from accounts.models import User 
-from account.models import Account
+from userauth.models import Account
 from shortuuid.django_fields import ShortUUIDField
 
 

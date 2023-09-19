@@ -1,5 +1,5 @@
 from django import forms 
-from account.models import KYC
+from userauth.models import KYC
 from django.forms import ImageField, FileInput, DateInput
 
 class DateInput(forms.DateInput):
@@ -16,7 +16,7 @@ class KYCForm(forms.ModelForm):
         widgets = {
             "full_name": forms.TextInput(attrs={"placeholder":"Full Name"}),
             "mobile": forms.TextInput(attrs={"placeholder":"Mobile Number"}),
-            "fax": forms.TextInput(attrs={"placeholder":"Fax Number"}),
+            "fax": forms.TextInput(attrs={"placeholder":"BVN Number"}),
             "country": forms.TextInput(attrs={"placeholder":"Country"}),
             "state": forms.TextInput(attrs={"placeholder":"State"}),
             "city": forms.TextInput(attrs={"placeholder":"City"}),

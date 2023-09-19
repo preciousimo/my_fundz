@@ -216,7 +216,7 @@
                         />
                       </div>
                       <div class="profile-head">
-                        <a href="{% url 'account:account' %}">
+                        <a href="{% url 'userauth:account' %}">
                           <h5>{{kyc.full_name|title}}</h5>
                         </a>
                         <p class="wallet-id">
@@ -256,7 +256,7 @@
               </div>
               <ul>
                 <li class="active">
-                  <a href="{% url 'account:dashboard' %}">
+                  <a href="{% url 'userauth:dashboard' %}">
                     <img
                       src="{% static 'dashboard/images/icon/dashboard.png' %}"
                       alt="Dashboard"
@@ -330,7 +330,7 @@
               </ul>
               <ul class="bottom-item">
                 <li>
-                  <a href="{% url 'account:account' %}">
+                  <a href="{% url 'userauth:account' %}">
                     <img
                       src="{% static 'dashboard/images/icon/account.png' %}"
                       alt="Account"
