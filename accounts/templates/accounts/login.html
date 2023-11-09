@@ -20,7 +20,7 @@
                         <h2 class="title">Log in to Continue</h2>
                         <p class="dont-acc">Don’t have an account? <a href="{% url 'signup' %}">Sign up</a></p>
                         <div class="reg-google">
-                            <a href="{% provider_login_url 'google' %}"><i class="fab fa-google"></i>Log in with Google</a>
+                            <a href="{% provider_login_url 'google' %}?next=/"><i class="fab fa-google"></i>Log in with Google</a>
                         </div>
                         <span class="or">Or Continue With</span>
                     </div>
