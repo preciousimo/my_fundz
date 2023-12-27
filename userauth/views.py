@@ -108,3 +108,28 @@ def dashboard(request):
     }
     return render(request, "userauth/dashboard.html", context)
     
+    
+@login_required
+def change_pin(request):
+    if request.method == "POST":
+        current_pin = request.POST.get('current_pin')
+        new_pin = request.POST.get('new_pin')
+        confirm_new_pin = request.POST.get('confirm_new_pin')
+
+        account = Account.objects.get(user=request.user)
+
+        if current_pin != account.pin_number:
+            messages.warning(request, "Invalid current PIN")
+            return redirect("userauth:account")
+
+        if new_pin != confirm_new_pin:
+            messages.warning(request, "New PIN and Confirm New PIN do not match")
+            return redirect("userauth:account")
+
+        account.pin_number = new_pin
+        account.save()
+
+        messages.success(request, "PIN updated successfully")
+        return redirect("userauth:dashboard")
+    else:
+        pass

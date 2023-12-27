@@ -365,28 +365,21 @@
                         <a href="javascript:void(0)">Forgot pin?</a>
                       </div>
                       <div class="col-sm-6">
-                        <form action="#">
+                        <form method="post" action="{% url 'userauth:change-pin' %}">
+                          {% csrf_token %}
                           <div class="row justify-content-center">
                             <div class="col-md-12">
                               <div class="single-input">
                                 <label for="current-pin"
                                   >Current pin</label
                                 >
-                                <input
-                                  type="text"
-                                  id="current-pin"
-                                  placeholder="Current pin"
-                                />
+                                <input type="password" name="current_pin" id="current-pin" placeholder="Current PIN" required/>
                               </div>
                             </div>
                             <div class="col-md-12">
                               <div class="single-input">
                                 <label for="new-pin">New pin</label>
-                                <input
-                                  type="text"
-                                  id="new-pin"
-                                  placeholder="New pin"
-                                />
+                                <input type="password" name="new_pin" id="new-pin" placeholder="New PIN" required />
                               </div>
                             </div>
                             <div class="col-md-12">
@@ -394,16 +387,12 @@
                                 <label for="confirm-pin"
                                   >Confirm New pin</label
                                 >
-                                <input
-                                  type="text"
-                                  id="confirm-pin"
-                                  placeholder="Confirm New pin"
-                                />
+                                <input type="password" name="confirm_new_pin" id="confirm-new-pin" placeholder="Confirm New PIN" required>
                               </div>
                             </div>
                             <div class="col-md-12">
                               <div class="btn-border w-100">
-                                <button class="cmn-btn w-100">
+                                <button type="submit" class="cmn-btn w-100">
                                   Update pin
                                 </button>
                               </div>
