@@ -17,7 +17,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['http://127.0.0.1:8000','http://localhost','https://myfundz.fly.dev','https://myfundz.com','https://www.myfundz.com']
 
 
 # Application definition
