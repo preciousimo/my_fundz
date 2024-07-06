@@ -1,33 +1,26 @@
-ARG PYTHON_VERSION=3.11-slim-bullseye
+# Base Image
+FROM python:3.9-slim
 
-FROM python:${PYTHON_VERSION}
-
-ENV PYTHONDONTWRITEBYTECODE 1
+# Environment Variables
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
-# Install psycopg2 dependencies.
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# Set working directory
+WORKDIR /app
 
-WORKDIR /code
+# Copy requirements file and install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Combine COPY commands to reduce layers.
-COPY requirements.txt /tmp/requirements.txt
-COPY . /code
+# Copy project files
+COPY . /app/
 
-RUN set -ex && \
-    pip install --upgrade pip && \
-    pip install --verbose -r /tmp/requirements.txt && \
-    rm -rf /root/.cache/
+# Collect static files (if applicable)
+RUN python manage.py collectstatic --no-input
 
-# Set the SECRET_KEY environment variable.
-ENV SECRET_KEY "MDoBUbH87qPxp7nmy2yY82D5BMTjkhDMC90D9sZD66NDfvMx0f"
-
-# Commented out temporarily for debugging.
-# RUN python manage.py collectstatic --noinput
-
+# Expose port 8000
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "my_fundz.wsgi"]
+# Run the application using Gunicorn
+CMD ["gunicorn", "my_fundz.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]

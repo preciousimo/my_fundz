@@ -1,9 +1,7 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
+__pycache__/
 *.so
 
 # Distribution / packaging
@@ -31,8 +29,6 @@ MANIFEST
 .vscode/
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -58,41 +54,38 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Django-related files
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+media/
+# static/
+staticfiles/
+.static_storage/
 
-# Flask stuff:
-instance/
-.webassets-cache
+# Ignore migrations
+**/migrations/*.py
+**/migrations/*.pyc
+migrations
 
-# Scrapy stuff:
-.scrapy
+# Ignore local database settings
+**/settings/local.py
 
-# Sphinx documentation
-docs/_build/
+# Ignore IDE and editor-specific files
+.idea/
+*.sublime-project
+*.sublime-workspace
 
-# PyBuilder
-target/
+# Ignore system files
+.DS_Store
+Thumbs.db
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
+# Ignore backup and temporary files
+*~
+*.swp
+*.bak
+*.tmp
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
@@ -110,6 +103,7 @@ celerybeat.pid
 .menv
 env/
 venv/
+menv/
 ENV/
 env.bak/
 venv.bak/
@@ -133,7 +127,24 @@ dmypy.json
 .pyre/
 tmp
 
-migrations
+# Flask stuff:
+instance/
+.webassets-cache
 
-media/
-staticfiles/
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# IPython Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Redis
+*.rdb

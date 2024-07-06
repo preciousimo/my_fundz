@@ -1,5 +1,6 @@
-fly.toml
 .git/
-*.sqlite3
-.menv
+*.pyc
+__pycache__/
+static/
+media/
 .env
