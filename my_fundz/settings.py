@@ -185,7 +185,9 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
         'AUTH_PARAMS': {
             'access_type': 'online',
-        }
+        },
+        'KEY': os.getenv('SOCIALACCOUNT_PROVIDERS_GOOGLE_KEY'), 
+        'SECRET': os.getenv('SOCIALACCOUNT_PROVIDERS_GOOGLE_SECRET'), 
     }
 }
 
