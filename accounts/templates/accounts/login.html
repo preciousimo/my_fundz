@@ -19,11 +19,10 @@
                         <h5 class="sub-title">Account</h5>
                         <h2 class="title">Log in to Continue</h2>
                         <p class="dont-acc">Don’t have an account? <a href="{% url 'signup' %}">Sign up</a></p>
-                        <div class="reg-google">
-                            <a href="{% provider_login_url 'google' %}?next=/"><i class="fab fa-google"></i>Log in with Google</a>
-                        </div>
                         <span class="or">Or Continue With</span>
                     </div>
+
+                    <!-- Standard Login Form -->
                     <form action="{% url 'login' %}" method="POST">
                         {% csrf_token %}
                         <div class="row">
@@ -40,6 +39,12 @@
                             </div>
                         </div>
                     </form>
+
+                    <!-- Google Login Button -->
+                    <div class="reg-google mt-30 text-center"> 
+                        <a href="{% provider_login_url 'google' %}?next=/"><i class="fab fa-google"></i>Log in with Google</a>
+                    </div>
+
                     <div class="forgot-pass mt-30 text-center">
                         <a href="javascript:void(0)">Forgot Password</a>
                     </div>
