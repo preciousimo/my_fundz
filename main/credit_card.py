@@ -5,6 +5,9 @@ from main.models import CreditCard
 from userauth.models import Account
 from decimal import Decimal
 
+# Define a constant for the redirect URL
+CARD_DETAIL_URL = "main:card-detail"
+
 @login_required
 def card_detail(request, card_id):
     account = Account.objects.get(user=request.user)
@@ -32,10 +35,10 @@ def fund_credit_card(request, card_id):
             credit_card.save()
             
             messages.success(request, "Funding Successfull")
-            return redirect("main:card-detail", credit_card.card_id)
+            return redirect(CARD_DETAIL_URL, credit_card.card_id)
         else:
             messages.warning(request, "Insufficient Funds")
-            return redirect("main:card-detail", credit_card.card_id)
+            return redirect(CARD_DETAIL_URL, credit_card.card_id)
 
 @login_required
 def withdraw_fund(request, card_id):
@@ -55,13 +58,13 @@ def withdraw_fund(request, card_id):
             credit_card.save()
 
             messages.success(request, "Withdrawal Successfull")
-            return redirect("main:card-detail", credit_card.card_id)
+            return redirect(CARD_DETAIL_URL, credit_card.card_id)
         elif credit_card.amount == 0.00:
             messages.warning(request, "Insufficient Funds")
-            return redirect("main:card-detail", credit_card.card_id)
+            return redirect(CARD_DETAIL_URL, credit_card.card_id)
         else:
             messages.warning(request, "Insufficient Funds")
-            return redirect("main:card-detail", credit_card.card_id)
+            return redirect(CARD_DETAIL_URL, credit_card.card_id)
         
 @login_required
 def delete_card(request, card_id):
