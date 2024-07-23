@@ -8,6 +8,9 @@ from decimal import Decimal
 # Define a constant for the redirect URL
 CARD_DETAIL_URL = "main:card-detail"
 
+# Define a constant for the insufficient funds message
+INSUFFICIENT_FUNDS_MESSAGE = "Insufficient Funds"
+
 @login_required
 def card_detail(request, card_id):
     account = Account.objects.get(user=request.user)
@@ -37,7 +40,7 @@ def fund_credit_card(request, card_id):
             messages.success(request, "Funding Successfull")
             return redirect(CARD_DETAIL_URL, credit_card.card_id)
         else:
-            messages.warning(request, "Insufficient Funds")
+            messages.warning(request, INSUFFICIENT_FUNDS_MESSAGE)
             return redirect(CARD_DETAIL_URL, credit_card.card_id)
 
 @login_required
@@ -60,10 +63,10 @@ def withdraw_fund(request, card_id):
             messages.success(request, "Withdrawal Successfull")
             return redirect(CARD_DETAIL_URL, credit_card.card_id)
         elif credit_card.amount == 0.00:
-            messages.warning(request, "Insufficient Funds")
+            messages.warning(request, INSUFFICIENT_FUNDS_MESSAGE)
             return redirect(CARD_DETAIL_URL, credit_card.card_id)
         else:
-            messages.warning(request, "Insufficient Funds")
+            messages.warning(request, INSUFFICIENT_FUNDS_MESSAGE)
             return redirect(CARD_DETAIL_URL, credit_card.card_id)
         
 @login_required
