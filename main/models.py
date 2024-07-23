@@ -55,8 +55,8 @@ class Transaction(models.Model):
     def __str__(self):
         try:
             return f"{self.user}"
-        except:
-            return f"Transaction"
+        except Exception as e:  # Specify Exception class
+            return f"Transaction - Error: {e}"  # Handle the error
 
 
 class CreditCard(models.Model):
@@ -78,4 +78,3 @@ class CreditCard(models.Model):
 
     def __str__(self):
         return f"{self.user}"
-
