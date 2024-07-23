@@ -46,7 +46,8 @@ def withdraw_fund(request, card_id):
         amount = request.POST.get("amount")
         print(amount)
 
-        if credit_card.amount >= Decimal(amount) and credit_card.amount != 0.00:
+        # Use comparison with tolerance for floating point values
+        if credit_card.amount >= Decimal(amount) - Decimal('0.00001') and credit_card.amount != 0.00:
             account.account_balance += Decimal(amount)
             account.save()
 
