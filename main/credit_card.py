@@ -47,23 +47,19 @@ def fund_credit_card(request, card_id):
 def withdraw_fund(request, card_id):
     account = Account.objects.get(user=request.user)
     credit_card = CreditCard.objects.get(card_id=card_id, user=request.user)
-
     if request.method == "POST":
-        amount = request.POST.get("amount")
+        amount = Decimal(request.POST.get("amount"))
         print(amount)
-
-        # Use comparison with tolerance for floating point values
-        if credit_card.amount >= Decimal(amount) - Decimal('0.00001') and credit_card.amount != 0.00:
-            account.account_balance += Decimal(amount)
+        
+        # Define a small tolerance for floating point comparisons
+        EPSILON = Decimal('0.00001')
+        
+        if credit_card.amount >= amount - EPSILON:
+            account.account_balance += amount
             account.save()
-
-            credit_card.amount -= Decimal(amount)
+            credit_card.amount -= amount
             credit_card.save()
-
-            messages.success(request, "Withdrawal Successfull")
-            return redirect(CARD_DETAIL_URL, credit_card.card_id)
-        elif credit_card.amount == 0.00:
-            messages.warning(request, INSUFFICIENT_FUNDS_MESSAGE)
+            messages.success(request, "Withdrawal Successful")
             return redirect(CARD_DETAIL_URL, credit_card.card_id)
         else:
             messages.warning(request, INSUFFICIENT_FUNDS_MESSAGE)
