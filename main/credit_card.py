@@ -49,7 +49,6 @@ def withdraw_fund(request, card_id):
     credit_card = CreditCard.objects.get(card_id=card_id, user=request.user)
     if request.method == "POST":
         amount = Decimal(request.POST.get("amount"))
-        print(amount)
         
         # Define a small tolerance for floating point comparisons
         EPSILON = Decimal('0.00001')
