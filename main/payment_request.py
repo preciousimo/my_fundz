@@ -6,8 +6,10 @@ from django.contrib import messages
 from decimal import Decimal
 from main.models import Transaction
 
+DASHBOARD_URL = "userauth:dashboard"
+
 @login_required
-def SearchUsersRequest(request):
+def search_users_request(request):
     account = Account.objects.all() 
     query = request.POST.get("account_number")
     if query:
@@ -23,14 +25,14 @@ def SearchUsersRequest(request):
     }
     return render(request, "payment_request/search_users.html", context)
 
-def AmountRequest(request, account_number):
+def amount_request(request, account_number):
     account = Account.objects.get(account_number=account_number)
     context = {
         "account": account,
     }
     return render(request, "payment_request/amount_request.html", context)
 
-def AmountRequestProcess(request, account_number):
+def amount_request_process(request, account_number):
     account = Account.objects.get(account_number=account_number)
 
     sender = request.user
@@ -62,10 +64,10 @@ def AmountRequestProcess(request, account_number):
         return redirect("main:amount-request-confirmation", account.account_number, transaction_id)
     else:
         messages.warning(request, "Error Occured, try again later.")
-        return redirect("userauth:dashboard")
+        return redirect(DASHBOARD_URL)
 
 
-def AmountRequestConfirmation(request, account_number, transaction_id):
+def amount_request_confirmation(request, account_number, transaction_id):
     account = Account.objects.get(account_number=account_number)
     transaction = Transaction.objects.get(transaction_id=transaction_id)
 
@@ -75,7 +77,7 @@ def AmountRequestConfirmation(request, account_number, transaction_id):
     }
     return render(request, "payment_request/amount_request_confirmation.html", context)
 
-def AmountRequestFinalProcess(request, account_number, transaction_id):
+def amount_request_final_process(request, account_number, transaction_id):
     account = Account.objects.get(account_number=account_number)
     transaction = Transaction.objects.get(transaction_id=transaction_id)
 
@@ -89,9 +91,9 @@ def AmountRequestFinalProcess(request, account_number, transaction_id):
             return redirect("main:amount-request-completed", account.account_number, transaction.transaction_id)
     else:
         messages.warning(request, "An Error Occured, try again later.")
-        return redirect("userauth:dashboard")
+        return redirect(DASHBOARD_URL)
     
-def RequestCompleted(request, account_number ,transaction_id):
+def request_completed(request, account_number ,transaction_id):
     account = Account.objects.get(account_number=account_number)
     transaction = Transaction.objects.get(transaction_id=transaction_id)
     
@@ -143,7 +145,7 @@ def settlement_processing(request, account_number, transaction_id):
             return redirect("main:settlement-confirmation", account.account_number, transaction.transaction_id)
     else:
         messages.warning(request, "Error Occured")
-        return redirect("userauth:dashboard")
+        return redirect(DASHBOARD_URL)
 
 
 def settlement_completed(request, account_number ,transaction_id):
@@ -165,4 +167,3 @@ def delete_payment_request(request, account_number ,transaction_id):
         transaction.delete()
         messages.success(request, "Payment Request Deleted Sucessfully")
         return redirect("main:transactions")
-    
