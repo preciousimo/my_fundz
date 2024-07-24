@@ -4,17 +4,21 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from accounts.models import User
 
-def RegisterView(request):
+def register_view(request):
     if request.user.is_authenticated:
         messages.warning(request, "You are already logged in.")
         return redirect('/')
     if request.method == 'POST':
         form = UserRegisterForm(request.POST or None)
         if form.is_valid():
+            #  form.save(commit=False)
+            #  form.instance.user = request.user
+            #  form.save()
+
             new_user = form.save(commit=True)
             username = form.cleaned_data['username']
             messages.success(request, f"New Account Created: {username}.")
-            new_user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password1'])
+            # new_user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password1'])
             login(request, new_user)
             return redirect('userauth:account')
     else:
@@ -23,7 +27,7 @@ def RegisterView(request):
     context = {'form': form}
     return render(request, "accounts/sign_up.html", context)
 
-def LoginView(request):
+def login_view(request):
     if request.user.is_authenticated:
         messages.warning(request, "You are already logged in.")
         return redirect('userauth:dashboard')
@@ -48,7 +52,7 @@ def LoginView(request):
 
     return render(request, 'accounts/login.html')
 
-def LogoutView(request):
+def logout_view(request):
 
     logout(request)
     messages.info(request, "You have successfully logged out.") 
